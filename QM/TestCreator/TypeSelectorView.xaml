@@ -1,0 +1,124 @@
+﻿<UserControl x:Class="QM.TestCreator.TypeSelectorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QM.TestCreator"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="DigitalTestTemplate">
+            <StackPanel>
+                <GroupBox Header="Set answers type">
+                    <ComboBox SelectedIndex="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor},Path=DataContext.SelectedAnswerIndex}">
+                        <ComboBoxItem Content="True/False"/>
+                        <ComboBoxItem Content="A/B/C - not available in digital test" Visibility="Collapsed"/>
+                        <ComboBoxItem Content="Custom answers"/>
+                    </ComboBox>
+                </GroupBox>
+                <StackPanel Orientation="Horizontal" Margin="5 0 5 0">
+                    <CheckBox Content="Automatically generated groups" 
+                          IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor},Path=DataContext.AutoGroups}"/>
+                </StackPanel>
+
+                <GroupBox Header="Set number of groups">
+                    <DockPanel>
+                        <Controls:NumericUpDown Value="{Binding ElementName=GroupSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right"
+                                                Minimum="1" Maximum="5" Speedup="False" Margin="5 0 0 0"/>
+                        <Slider Maximum="5" Minimum="1" TickFrequency="1" TickPlacement="BottomRight" 
+                                IsSnapToTickEnabled="True" Name="GroupSlider" 
+                                Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor},Path=DataContext.NumberOfGroups}"/>
+                    </DockPanel>
+                </GroupBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ExamTestTemplate">
+            <StackPanel>
+                <GroupBox Header="Set answers type">
+                    <ComboBox SelectedIndex="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor},Path=DataContext.SelectedAnswerIndex}">
+                        <ComboBoxItem Content="True/False"/>
+                        <ComboBoxItem Content="A/B/C"/>
+                        <ComboBoxItem Content="Custom answers - not available in exam test" Visibility="Collapsed"/>
+                    </ComboBox>
+                </GroupBox>
+                <GroupBox Header="Set number of groups">
+                    <DockPanel>
+                        <Controls:NumericUpDown Value="{Binding ElementName=GroupSlider2, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Right"
+                                                Minimum="1" Maximum="5" Speedup="False" Margin="5 0 0 0"/>
+                        <Slider Maximum="5" Minimum="1" TickFrequency="1" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Name="GroupSlider2" 
+                                Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor},Path=DataContext.NumberOfGroups}"/>
+                    </DockPanel>
+                </GroupBox>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="DefaultTemplate">
+            <TextBlock Text="Please select test type." HorizontalAlignment="Center" FontSize="17" FontWeight="Bold" VerticalAlignment="Center"/>
+        </DataTemplate>
+        <local:TestTypeDisplaySelector x:Key="TestTypeContentTemplateSelector" DigitalTestDataTemplate="{StaticResource DigitalTestTemplate}" ExamTestDataTemplate="{StaticResource ExamTestTemplate}"
+                                       DefaultDataTemplate ="{StaticResource DefaultTemplate}"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <RadioButton Grid.Row="0" Grid.Column="0" Style="{StaticResource {x:Type ToggleButton}}" 
+                     GroupName="TestType"
+                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                     Command="{Binding SetTestTypeCommand}" 
+                     CommandParameter="Digital test">
+            <StackPanel>
+                <iconPacks:PackIconMaterial Kind="MonitorCellphone" Margin="5 5 5 5" Width="50" Height="50" HorizontalAlignment="Center"/>
+                <TextBlock Text="Digital Test" Margin="5 5 5 5"/>
+            </StackPanel>
+        </RadioButton>
+
+        <RadioButton Grid.Row="0" Grid.Column="1" Style="{StaticResource {x:Type ToggleButton}}" 
+                     GroupName="TestType" 
+                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                     Command="{Binding SetTestTypeCommand}" 
+                     CommandParameter="Exam test">
+            <StackPanel>
+                <iconPacks:PackIconModern Kind="Paper"  Margin="5 5 5 5" Width="50" Height="50" HorizontalAlignment="Center"/>
+                <TextBlock Text="Paper Test" Margin="5 5 5 5"/>
+            </StackPanel>
+        </RadioButton>
+
+        <Controls:TransitioningContentControl Grid.ColumnSpan="2" Grid.Row="1" Content="{Binding SelectedTestType}" ContentTemplateSelector="{StaticResource TestTypeContentTemplateSelector}" Transition="Default"/>
+
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="2" Command="{Binding NextCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Next"></TextBlock>
+                    <iconPacks:PackIconFontAwesome Kind="AngleRightSolid" Margin="5 0 0 0" VerticalAlignment="Stretch"/>
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="1" Command="{Binding OpenAndEditCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="SquareEditOutline" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                    <TextBlock Text="Open and edit"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="0" Command="{Binding BackCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconFontAwesome Kind="AngleLeftSolid" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                    <TextBlock Text="Back"></TextBlock>
+                </StackPanel>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

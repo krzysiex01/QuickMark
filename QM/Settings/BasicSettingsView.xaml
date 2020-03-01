@@ -1,0 +1,190 @@
+﻿<UserControl x:Class="QM.Settings.BasicSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:QM.Settings"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:Net="clr-namespace:System.Net.NetworkInformation;assembly=System"
+             xmlns:qm="clr-namespace:QM"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="NetworkInterfaceTypes" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Net:NetworkInterfaceType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <qm:SubtractionConverter x:Key="SubtractionConverter"></qm:SubtractionConverter>
+
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+        </Style>
+        <Style TargetType="{x:Type Controls:ToggleSwitch}" BasedOn="{StaticResource {x:Type Controls:ToggleSwitch}}">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="DarkGray"></Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3.5*"></RowDefinition>
+            <RowDefinition Height="4.5*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width ="*"/>
+            <ColumnDefinition Width ="*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Row="0" Grid.ColumnSpan="2" Header="Server setting">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock>uriPrefixes</TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                        <TextBox Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=StackPanel},Path=ActualWidth, Converter={StaticResource SubtractionConverter},ConverterParameter=75}"
+                                 Margin="0 0 10 0" Text="{Binding NewPrefix, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Button Command="{Binding AddNewPrefixCommand}">
+                            <iconPacks:PackIconMaterial Kind="ArrowRightBoldBoxOutline" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0 0 5 0">Network interface type</TextBlock>
+                        <Controls:SplitButton ItemsSource="{Binding Source={StaticResource NetworkInterfaceTypes}}"
+                                                 SelectedValue="{Binding NetworkInterfaceType}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button FontStyle="Normal" FontWeight="Normal" FontSize="10" Command="{Binding ChangeServerContentFolderCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterial Kind="FolderOpen" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                                <TextBlock>Change server content folder</TextBlock>
+                            </StackPanel>
+                        </Button>
+                        <Button FontStyle="Normal" FontWeight="Normal" FontSize="10" Command="{Binding ChangeLogFolderCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterial Kind="FolderOpen" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                                <TextBlock>Change log folder</TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+
+                <ListView Grid.Column="1" ItemsSource="{Binding Prefixes, NotifyOnSourceUpdated=True}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=ListView,Mode=FindAncestor},Path=ActualWidth,Converter={StaticResource SubtractionConverter},ConverterParameter=50}"></ColumnDefinition>
+                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding}" Grid.Column="0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Path=DataContext.RemovePrefixCommand}"
+                                                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}},Path=Content}" 
+                                                                Margin="5 5 5 5"
+                                                                Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}" 
+                                                                Grid.Column="1">
+                                    <iconPacks:PackIconFontAwesome Kind="MinusCircleSolid" />
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Test settings">
+            <ScrollViewer>
+                <StackPanel HorizontalAlignment="Stretch">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0">Groups Limit</TextBlock>
+                        <Controls:NumericUpDown DockPanel.Dock="Right" Value="{Binding GroupsLimit}"></Controls:NumericUpDown>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0">Fair-play system:</TextBlock>
+                        <Controls:ToggleSwitch DockPanel.Dock="Right" IsChecked="{Binding FairPlay}"></Controls:ToggleSwitch>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0">Duplicates:</TextBlock>
+                        <Controls:ToggleSwitch DockPanel.Dock="Right" OnLabel="Allow" OffLabel="Reject" IsChecked="{Binding IgnoreDuplicates}"></Controls:ToggleSwitch>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0">Real time results:</TextBlock>
+                        <Controls:ToggleSwitch DockPanel.Dock="Right" OnLabel="Display" OffLabel="Hide" IsChecked="{Binding RealTimeResult}"></Controls:ToggleSwitch>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0">AutoGroups - questions:</TextBlock>
+                        <Controls:ToggleSwitch DockPanel.Dock="Right" OnLabel="Mix" OffLabel="Preserve orginal order" IsChecked="{Binding MixQuestions}"></Controls:ToggleSwitch>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0">AutoGroups - answers:</TextBlock>
+                        <Controls:ToggleSwitch DockPanel.Dock="Right" OnLabel="Mix" OffLabel="Preserve orginal order" IsChecked="{Binding MixAnswers}"></Controls:ToggleSwitch>
+                    </DockPanel>
+                    <Button Margin="0 0 0 0" FontStyle="Normal" FontWeight="Normal" FontSize="10" Command="{Binding ChangeTestStorageFolderCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="FolderOpen" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                            <TextBlock>Change test storage folder</TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Records autosave options">
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0">Autosave:</TextBlock>
+                    <Controls:ToggleSwitch DockPanel.Dock="Right" IsChecked="{Binding AutoSave}"></Controls:ToggleSwitch>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Margin="0 0 10 0">Select format:</TextBlock>
+                    <ListBox SelectionMode="Multiple">
+                        <ListBoxItem IsSelected="{Binding SaveAsXLSX}">.xlsx</ListBoxItem>
+                        <ListBoxItem IsSelected="{Binding SaveAsCSV}">.csv</ListBoxItem>
+                    </ListBox>
+                </DockPanel>
+                <Button Margin="0 0 0 0" FontStyle="Normal" FontWeight="Normal" FontSize="10" Command="{Binding ChangeDefaultSaveFolderCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Kind="FolderOpen" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                        <TextBlock>Change autosave folder</TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </GroupBox>
+
+        <Button Grid.Row="2" Grid.Column="0" Command="{Binding BackCommand}">
+            <StackPanel Orientation="Horizontal">
+                <iconPacks:PackIconFontAwesome Kind="AngleLeftSolid" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                <TextBlock Text="Back"/>
+            </StackPanel>
+        </Button>
+        <Button Grid.Row="2" Grid.Column="1" Command="{Binding SaveCommand}">
+            <StackPanel Orientation="Horizontal">
+                <iconPacks:PackIconModern Kind="DiskDownload" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                <TextBlock Text="Save"/>
+            </StackPanel>
+        </Button>
+    </Grid>
+</UserControl>

@@ -1,0 +1,191 @@
+﻿<UserControl x:Class="QM.TestCreator.TestCreatorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QM.TestCreator"
+             xmlns:qm="clr-namespace:QM"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <qm:SubtractionConverter x:Key="SubtractionConverter"></qm:SubtractionConverter>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding TestGroups}" SelectedIndex="0">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Header}"></TextBlock>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <ListView ItemsSource="{Binding TestQuestionList}" Grid.Column="0" 
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <ContentPresenter />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="SkyBlue" BorderThickness="2" CornerRadius="10" Margin="0 2 0 0">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"></RowDefinition>
+                                                <RowDefinition Height="auto"></RowDefinition>
+                                                <RowDefinition Height="auto"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListView}},
+                                                Path=ActualWidth, 
+                                                Converter={StaticResource ResourceKey=SubtractionConverter},
+                                                ConverterParameter=115}"/>
+                                                <ColumnDefinition Width="50"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Number}" Grid.Column="0" Grid.RowSpan="3" Margin="5 5 5 5"
+                                                                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="17" FontWeight="Bold"/>
+                                            <TextBox Grid.Column="1" MinWidth="400" Text="{Binding Question}" 
+                                                 Visibility="{Binding IsQuestionTextBoxVisible}" TextWrapping="Wrap"
+                                                 Controls:TextBoxHelper.Watermark="Enter question here."
+                                                 Margin="5 5 5 5"/>
+                                            <ListView Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Answers}" 
+                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                      ScrollViewer.CanContentScroll="False"
+                                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                              HorizontalContentAlignment="Stretch"
+                                              SelectedItem="{Binding CorrectAnswer}"
+                                                  Margin="5 5 5 5">
+                                                <ListView.Template>
+                                                    <ControlTemplate>
+                                                        <ItemsPresenter></ItemsPresenter>
+                                                    </ControlTemplate>
+                                                </ListView.Template>
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ListViewItem}">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                                    <ContentPresenter />
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+                                                <ListView.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel></WrapPanel>
+                                                    </ItemsPanelTemplate>
+                                                </ListView.ItemsPanel>
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border Name="AnswerBorder" 
+                                                            BorderBrush="DeepSkyBlue" 
+                                                            BorderThickness="5" CornerRadius="15" 
+                                                            Background="LightBlue"
+                                                            Margin="5 5 5 5">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding}" Margin="5 5 5 5" FontSize="15"/>
+                                                                <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}},Path=DataContext.RemoveAnswerCommand}"
+                                                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}},Path=Content}" 
+                                                                    Margin="5 5 5 5"
+                                                                    Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+                                                                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}},Path=DataContext.IsAddNewAnswerButtonVisible}">
+                                                                    <iconPacks:PackIconFontAwesome Kind="MinusCircleSolid" />
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Border>
+                                                        <DataTemplate.Triggers>
+                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}, Path=IsSelected}" Value="True">
+                                                                <Setter TargetName="AnswerBorder" Property="BorderBrush" Value="Green"></Setter>
+                                                                <Setter TargetName="AnswerBorder" Property="Background" Value="LightGreen"></Setter>
+                                                            </DataTrigger>
+                                                        </DataTemplate.Triggers>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                            <Grid Grid.Column="1" Grid.Row="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Column="0" MinWidth="350" Text="{Binding NewAnswer}" 
+                                                         VerticalAlignment="Center"
+                                                         MaxWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListViewItem}, Path=ActualWidth, Converter={StaticResource SubtractionConverter}, ConverterParameter=200}"
+                                                     Visibility="{Binding IsNewAnswerTextBoxVisible}" 
+                                                     TextWrapping="Wrap"
+                                                     Controls:TextBoxHelper.Watermark="Enter answer here."
+                                                     Margin="5 5 5 5"/>
+                                                <Button Grid.Column="1" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                    Command="{Binding AddAnswerCommand}" Visibility="{Binding IsAddNewAnswerButtonVisible}" Margin="20 0 5 5">
+                                                    <iconPacks:PackIconFontAwesome Kind="PlusCircleSolid"/>
+                                                </Button>
+                                            </Grid>
+                                            <Button Grid.RowSpan="3" Grid.Column="2" 
+                                                Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListView}},Path=DataContext.RemoveQuestionCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=Content}">
+                                                <iconPacks:PackIconMaterial Kind="DeleteForever" />
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Button Grid.Column="1" Command="{Binding AddQuestionCommand}">
+                            <StackPanel>
+                                <TextBlock Text="Add question"/>
+                                <iconPacks:PackIconMaterial Kind="PlaylistPlus" Margin="5 5 5 5" HorizontalAlignment="Center" 
+                                                            Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button},Path=FontSize}" 
+                                                            Width="{Binding RelativeSource={RelativeSource Mode=Self},Path=Height}"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+
+        <Button Grid.Row="1" Grid.Column="1" Command="{Binding PreviewCommand}">
+            <StackPanel Orientation="Horizontal">
+                <iconPacks:PackIconMaterial Kind="FileFind" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                <TextBlock Text="Preview"></TextBlock>
+            </StackPanel>
+        </Button>
+        <Button Grid.Row="1" Grid.Column="2" Command="{Binding SaveTestCommand}">
+            <StackPanel Orientation="Horizontal">
+                <iconPacks:PackIconEntypo Kind="Save" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                <TextBlock Text="Save test"></TextBlock>
+            </StackPanel>
+        </Button>
+        <Button Grid.Row="1" Grid.Column="0" Command="{Binding BackCommand}">
+            <StackPanel Orientation="Horizontal">
+                <iconPacks:PackIconFontAwesome Kind="AngleLeftSolid" Margin="0 0 5 0" VerticalAlignment="Stretch"/>
+                <TextBlock Text="Back"></TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
+</UserControl>

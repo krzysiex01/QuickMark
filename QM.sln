@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM", "QM\QM.csproj", "{FD5F057D-6A87-4A0F-9FB9-56183EEA5549}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMTests", "QMTests\QMTests.csproj", "{7EDAA2D8-8DB5-4AF1-8BD5-6E8997987625}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD5F057D-6A87-4A0F-9FB9-56183EEA5549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD5F057D-6A87-4A0F-9FB9-56183EEA5549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD5F057D-6A87-4A0F-9FB9-56183EEA5549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD5F057D-6A87-4A0F-9FB9-56183EEA5549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EDAA2D8-8DB5-4AF1-8BD5-6E8997987625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EDAA2D8-8DB5-4AF1-8BD5-6E8997987625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EDAA2D8-8DB5-4AF1-8BD5-6E8997987625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EDAA2D8-8DB5-4AF1-8BD5-6E8997987625}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {98E10842-D368-4EA5-9B67-EC9EAFE522E1}
+	EndGlobalSection
+EndGlobal

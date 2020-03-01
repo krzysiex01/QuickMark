@@ -1,0 +1,53 @@
+﻿<Controls:MetroWindow x:Class="QM.TestCreator.PreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QM.TestCreator"
+        mc:Ignorable="d"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      Title="Preview" Height="800" Width="1200"
+                      WindowStartupLocation="CenterScreen">
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Command="{Binding PrintAllCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="Printer" />
+                    <TextBlock Text="Print All" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding PrintCommand}" CommandParameter="{Binding ElementName=GroupTabControl,Path=SelectedIndex}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="Printer" />
+                    <TextBlock Text="Print" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding ConvertCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconOcticons Kind="Rocket" />
+                    <TextBlock Text="Quick converter" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+    <Grid>
+        <TabControl ItemsSource="{Binding Documents}" SelectedIndex="0" Grid.Row="0" Grid.ColumnSpan="3" Name="GroupTabControl">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Group "/>
+                        <TextBlock Text="{Binding Path=DataContext.Tag}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="SkyBlue" CornerRadius="10" BorderThickness="2" Margin="2 2 2 2">
+                        <FlowDocumentReader Document="{Binding}"></FlowDocumentReader>
+                    </Border>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </Grid>
+</Controls:MetroWindow>
