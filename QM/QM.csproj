@@ -119,7 +119,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="Classes\ApplicationSettings.cs" />
     <Compile Include="ApplicationView.xaml.cs">
       <DependentUpon>ApplicationView.xaml</DependentUpon>
     </Compile>
@@ -132,14 +132,14 @@
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainMenu\MainMenuViewModel.cs" />
-    <Compile Include="Record.cs" />
-    <Compile Include="Server.cs" />
+    <Compile Include="Classes\Record.cs" />
+    <Compile Include="Classes\Server.cs" />
     <Compile Include="TestCreator\PreviewWindow.xaml.cs">
       <DependentUpon>PreviewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestCreator\PreviewWindowViewModel.cs" />
-    <Compile Include="TestData.cs" />
-    <Compile Include="TestSheetData.cs" />
+    <Compile Include="Classes\TestData.cs" />
+    <Compile Include="Classes\TestSheetData.cs" />
     <Compile Include="Utility\AutoGroupsHelper.cs" />
     <Compile Include="Utility\Enums.cs" />
     <Compile Include="Utility\IServiceProvider.cs" />
@@ -164,7 +164,7 @@
       <DependentUpon>TestMakerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestMaker\TestMakerViewModel.cs" />
-    <Compile Include="TestManager.cs" />
+    <Compile Include="Classes\TestManager.cs" />
     <Compile Include="Utility\DataTemplateSelectors.cs" />
     <Compile Include="Utility\MathConverters.cs" />
     <Compile Include="Utility\NativeMethods.cs" />
