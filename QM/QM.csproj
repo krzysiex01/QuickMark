@@ -202,6 +202,30 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\Server\fonts\glyphicons-halflings-regular.eot" />
+    <Resource Include="Resources\Server\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Resources\Server\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Resources\Server\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Resources\Server\Json\data0.json" />
+    <None Include="Resources\Server\Json\data1.json" />
+    <None Include="Resources\Server\Json\data10.json" />
+    <None Include="Resources\Server\Json\data11.json" />
+    <None Include="Resources\Server\Json\data12.json" />
+    <None Include="Resources\Server\Json\data13.json" />
+    <None Include="Resources\Server\Json\data14.json" />
+    <None Include="Resources\Server\Json\data15.json" />
+    <None Include="Resources\Server\Json\data16.json" />
+    <None Include="Resources\Server\Json\data17.json" />
+    <None Include="Resources\Server\Json\data18.json" />
+    <None Include="Resources\Server\Json\data19.json" />
+    <None Include="Resources\Server\Json\data2.json" />
+    <None Include="Resources\Server\Json\data3.json" />
+    <None Include="Resources\Server\Json\data4.json" />
+    <None Include="Resources\Server\Json\data5.json" />
+    <None Include="Resources\Server\Json\data6.json" />
+    <None Include="Resources\Server\Json\data7.json" />
+    <None Include="Resources\Server\Json\data8.json" />
+    <None Include="Resources\Server\Json\data9.json" />
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +297,31 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Server\brand.svg" />
+    <Content Include="Resources\Server\Content\bootstrap.css" />
+    <Content Include="Resources\Server\Content\scrolling-nav.css" />
+    <Content Include="Resources\Server\Content\Site.css" />
+    <Resource Include="Resources\Server\favicon.ico" />
+    <Content Include="Resources\Server\fonts\glyphicons-halflings-regular.svg" />
+    <Resource Include="Resources\Server\Images\Background_Paper.png" />
+    <Resource Include="Resources\Server\Images\Background_PaperPlain.png" />
+    <Content Include="Resources\Server\Images\brand.svg" />
+    <Resource Include="Resources\Server\Images\Button_1.1.png" />
+    <Resource Include="Resources\Server\Images\Button_1.png" />
+    <Resource Include="Resources\Server\Images\button_2.png" />
+    <Resource Include="Resources\Server\Images\homework.png" />
+    <Resource Include="Resources\Server\Images\scan_burned.png" />
+    <Content Include="Resources\Server\index.html" />
+    <Resource Include="Resources\Server\info.txt" />
+    <Content Include="Resources\Server\Scripts\bootstrap.js" />
+    <Content Include="Resources\Server\Scripts\formCreator.js" />
+    <Content Include="Resources\Server\Scripts\jquery-3.3.1.js" />
+    <Content Include="Resources\Server\Scripts\scrolling-nav.js" />
+	<Content Include="Resources\Server\**">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

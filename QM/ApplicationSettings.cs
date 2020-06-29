@@ -84,10 +84,10 @@ namespace QM
             NetworkInterfaceType = NetworkInterfaceType.Wireless80211;
             SaveAsCSV = false;
             SaveAsXLSL = true;
-            ServerContentFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Server");
-            DefaultSaveFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saved Records");
-            LogFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
-            TestStorageFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Test Storage");
+            ServerContentFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Resources" ,"Server");
+            DefaultSaveFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Saved Records");
+            LogFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Logs");
+            TestStorageFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Test Storage");
             AutoSave = true;
             IgnoreCheating = false;
             IgnoreDuplicate = false;

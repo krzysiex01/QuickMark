@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Krzysztof J Oniszczuk">
+    <!-- Bootstrap core CSS -->
+    <link href="Content\bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="Content\Site.css" rel="stylesheet" />
+    <title>QuickMark</title>
+</head>
+<body id="page-top">
+    <header class="bg-light text-uppercase">
+        <div class="container text-center">
+            <h1>***InsertStringHere***</h1>     
+        </div>
+    </header>
+    
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; QuickMark 2019</p>
+        </div>
+    </footer>
+</body>
+</html>
